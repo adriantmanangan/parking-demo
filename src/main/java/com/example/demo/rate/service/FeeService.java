@@ -48,21 +48,22 @@ public class FeeService {
      * @return computation of the parkingSlot.
      */
     public BigDecimal getHourlyDifference(BigDecimal hourRate, VehicleDto vehicleDto) {
-        double diff = DateUtils.getDifferenceInMinutes(vehicleDto.getEntryTime(),vehicleDto.getExitTime());
+        BigDecimal diff = DateUtils.getDifferenceInHours(vehicleDto.getEntryTime(),vehicleDto.getExitTime());
+
         return getRate(diff, hourRate);
     }
 
     /**
      * Getting rate depends for DayRate and HourlyRate.
-     * @param minutes minutes
+     * @param hours minutes
      * @param hourRate hourRate
      * @return Computed date of the specific rate class.
      */
-    private BigDecimal getRate(double minutes, BigDecimal hourRate) {
-        if (isParkingTimeExceeds24Hrs(minutes)) {
-            return new DayRate(minutes, dayRate, hourRate).getRate();
+    private BigDecimal getRate(BigDecimal hours, BigDecimal hourRate) {
+        if (isParkingTimeExceeds24Hrs(hours)) {
+            return new DayRate(hours, dayRate, hourRate).getRate();
         } else {
-            return new HourlyRate(minutes, hourRate, flatRate).getRate();
+            return new HourlyRate(hours, hourRate, flatRate).getRate();
         }
     }
 }

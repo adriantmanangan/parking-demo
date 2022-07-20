@@ -1,5 +1,6 @@
 package com.example.demo.parking.utils;
 
+import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -17,4 +18,9 @@ public class DateUtils {
         Duration duration = Duration.between(firstDate,secondDate);
         return Math.abs(duration.toMinutes());
     }
+
+    public static BigDecimal getDifferenceInHours (LocalDateTime firstDate, LocalDateTime secondDate){
+        return BigDecimal.valueOf(Duration.between(firstDate,secondDate).toHours());
+    }
+
 }

@@ -14,17 +14,17 @@ public class DayRate {
 
     /**
      * Computation by day rate + extra hours (if applicable).
-     * @param minutes minutes
+     * @param hours minutes
      * @param dayRate dayRate
      * @param hourRate hourRate
      */
-    public DayRate(double minutes, BigDecimal dayRate, BigDecimal hourRate) {
-        BigDecimal hoursByDay = FeeUtils.getHoursByDay(minutes);
-        BigDecimal hour = FeeUtils.getRemainder(hoursByDay);
+    public DayRate(BigDecimal hours, BigDecimal dayRate, BigDecimal hourRate) {
+        BigDecimal day = FeeUtils.getDays(hours);
+        BigDecimal hour = FeeUtils.getHours(hours);
         if(hour.compareTo(BigDecimal.ZERO) > 0){
             hour = hour.multiply(hourRate);
         }
-        BigDecimal day = dayRate.multiply(new BigDecimal(FeeUtils.getDay(hoursByDay)));
-        this.rate = hour.add(day);
+        BigDecimal totalRate = dayRate.multiply(day);
+        this.rate = hour.add(totalRate);
     }
 }

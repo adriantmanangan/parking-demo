@@ -12,22 +12,16 @@ public class FeeUtils {
         return fee;
     }
 
-    public static BigDecimal getHoursByDay(double minutes) {
-        return BigDecimal.valueOf(minutes / 1440);
+    public static BigDecimal getDays(BigDecimal hour) {
+        return BigDecimal.valueOf(hour.divide(new BigDecimal(24)).intValue());
     }
 
-    public static boolean isParkingTimeExceeds24Hrs(double minutes){
-        return minutes >= 1440;
-    }
-
-    public static  BigInteger getDay(BigDecimal hours) {
-        return hours.toBigInteger();
+    public static boolean isParkingTimeExceeds24Hrs(BigDecimal hours){
+        return hours.compareTo(new BigDecimal(24)) >= 0;
 
     }
 
-    public static BigDecimal getRemainder(BigDecimal hours){
-        return hours.remainder(BigDecimal.ONE)
-            .setScale(1, RoundingMode.UP)
-            .multiply(new BigDecimal(10));
+    public static BigDecimal getHours(BigDecimal hours){
+        return hours.remainder(new BigDecimal(24));
     }
 }

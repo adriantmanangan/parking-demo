@@ -15,16 +15,14 @@ public class HourlyRate {
     /**
      * Computation of hour rate, checks if time is exceeds 3 hours and recalculate the remaining hours,
      * Hence, if below 3 hours, rate will be the flatRate.
-     * @param minutes minutes
+     * @param hours minutes
      * @param hourRate hourRate from parkingSlot size
      * @param flatRate flatRate from the configuration
      */
-    public HourlyRate(double minutes, BigDecimal hourRate, BigDecimal flatRate) {
-        if (minutes > 180) {
+    public HourlyRate(BigDecimal hours, BigDecimal hourRate, BigDecimal flatRate) {
+        if (hours.compareTo(new BigDecimal(3)) > 0) {
             rate = flatRate;
-            this.rate = rate.add(BigDecimal.valueOf((minutes - 180) / 60)
-                .setScale(0, RoundingMode.UP)
-                .multiply(hourRate));
+            this.rate = rate.add(hours.subtract(new BigDecimal(3)).multiply(hourRate));
         } else {
             this.rate = flatRate;
         }
