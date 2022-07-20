@@ -2,7 +2,6 @@ package com.example.demo.parking.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import com.example.demo.parking.Size;
 import com.example.demo.parking.utils.DateUtils;

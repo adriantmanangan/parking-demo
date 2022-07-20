@@ -3,10 +3,8 @@ package com.example.demo.parking.service.parkingslot;
 import java.util.Optional;
 
 import com.example.demo.parking.dto.ParkingSlotDto;
-import com.example.demo.parking.mapper.ParkingContext;
 import com.example.demo.parking.mapper.ParkingSlotContext;
 import com.example.demo.parking.mapper.ParkingSlotMapper;
-import com.example.demo.parking.model.ParkingSlot;
 import com.example.demo.parking.repository.ParkingSlotRepository;
 import com.example.demo.parking.service.response.ResponseService;
 import lombok.AllArgsConstructor;

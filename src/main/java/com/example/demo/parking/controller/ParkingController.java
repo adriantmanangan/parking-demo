@@ -1,10 +1,6 @@
 package com.example.demo.parking.controller;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import com.example.demo.parking.dto.ParkingDto;
 import com.example.demo.parking.service.parking.ParkingService;

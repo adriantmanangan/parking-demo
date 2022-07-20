@@ -3,7 +3,6 @@ package com.example.demo.parking.service.fee;
 import static com.example.demo.parking.utils.FeeUtils.isParkingTimeExceeds24Hrs;
 
 import java.math.BigDecimal;
-import java.time.Duration;
 import java.util.List;
 
 import com.example.demo.parking.dto.ParkingSlotDto;

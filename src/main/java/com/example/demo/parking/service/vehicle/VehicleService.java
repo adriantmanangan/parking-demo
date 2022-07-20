@@ -3,7 +3,6 @@ package com.example.demo.parking.service.vehicle;
 import java.util.Optional;
 
 import com.example.demo.parking.constants.SuccessMessageResponse;
-import com.example.demo.parking.dto.ParkingDto;
 import com.example.demo.parking.dto.ParkingSlotDto;
 import com.example.demo.parking.dto.VehicleDto;
 import com.example.demo.parking.model.ParkingSlot;

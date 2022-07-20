@@ -6,7 +6,6 @@ import com.example.demo.parking.Size;
 import com.example.demo.parking.dto.ParkingSlotDto;
 import com.example.demo.parking.dto.VehicleDto;
 import com.example.demo.parking.fee.FeeCalculator;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,5 @@
 package com.example.demo.parking.dto;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 import com.example.demo.parking.Size;
