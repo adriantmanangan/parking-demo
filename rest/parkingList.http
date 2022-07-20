@@ -1,0 +1,56 @@
+POST {{host}}/api/license/save
+Content-Type: application/json
+
+[
+  {
+    "parkingNumber": "Parking1",
+    "parkingSlotList": [
+      {
+        "distanceFromTheEntrance": 1,
+        "size": "LARGE"
+      },
+      {
+        "distanceFromTheEntrance": 4,
+        "size": "SMALL"
+      },
+      {
+        "distanceFromTheEntrance": 3,
+        "size": "LARGE"
+      }
+    ]
+  },
+  {
+    "parkingNumber": "Parking2",
+    "parkingSlotList": [
+      {
+        "distanceFromTheEntrance": 1,
+        "size": "LARGE"
+      },
+      {
+        "distanceFromTheEntrance": 4,
+        "size": "SMALL"
+      },
+      {
+        "distanceFromTheEntrance": 3,
+        "size": "LARGE"
+      }
+    ]
+  },
+  {
+    "parkingNumber": "Parking3",
+    "parkingSlotList": [
+      {
+        "distanceFromTheEntrance": 1,
+        "size": "LARGE"
+      },
+      {
+        "distanceFromTheEntrance": 4,
+        "size": "SMALL"
+      },
+      {
+        "distanceFromTheEntrance": 3,
+        "size": "LARGE"
+      }
+    ]
+  }
+]
