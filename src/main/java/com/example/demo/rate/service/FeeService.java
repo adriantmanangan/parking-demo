@@ -5,12 +5,12 @@ import static com.example.demo.parking.utils.FeeUtils.isParkingTimeExceeds24Hrs;
 import java.math.BigDecimal;
 import java.util.List;
 
-import com.example.demo.parkingslot.dto.ParkingSlotDto;
-import com.example.demo.vehicle.dto.VehicleDto;
 import com.example.demo.parking.fee.FeeCalculator;
+import com.example.demo.parking.utils.DateUtils;
+import com.example.demo.parkingslot.dto.ParkingSlotDto;
 import com.example.demo.rate.dto.DayRate;
 import com.example.demo.rate.dto.HourlyRate;
-import com.example.demo.parking.utils.DateUtils;
+import com.example.demo.vehicle.dto.VehicleDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -54,8 +54,8 @@ public class FeeService {
 
     /**
      * Getting rate depends for DayRate and HourlyRate.
-     * @param minutes
-     * @param hourRate
+     * @param minutes minutes
+     * @param hourRate hourRate
      * @return Computed date of the specific rate class.
      */
     private BigDecimal getRate(double minutes, BigDecimal hourRate) {

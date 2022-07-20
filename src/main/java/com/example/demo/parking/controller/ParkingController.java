@@ -1,6 +1,7 @@
 package com.example.demo.parking.controller;
 
 import java.util.List;
+import javax.validation.Valid;
 
 import com.example.demo.parking.dto.ParkingDto;
 import com.example.demo.parking.service.parking.ParkingService;
@@ -19,7 +20,7 @@ public class ParkingController {
     private final ParkingService parkingService;
 
     @PostMapping("/api/createParking")
-    public ResponseEntity<ParkingDto> createParkingSlot(@RequestBody ParkingDto parkingDto){
+    public ResponseEntity<ParkingDto> createParkingSlot(@RequestBody @Valid ParkingDto parkingDto){
         return parkingService.createParking(parkingDto);
     }
 

@@ -1,6 +1,7 @@
 package com.example.demo.parkingslot.dto;
 
 import java.util.Date;
+import javax.validation.constraints.NotNull;
 
 import com.example.demo.base.constants.Size;
 import com.example.demo.parking.dto.ParkingDto;
@@ -31,7 +32,7 @@ public class ParkingSlotDto {
     @JsonIgnore
     private Date dateCreated;
 
-    @JsonIgnore
+    @NotNull(message = "parking.not.found")
     private ParkingDto parkingDto;
 
     @JsonIgnore

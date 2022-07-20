@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import com.example.demo.base.constants.SuccessMessageResponse;
 import com.example.demo.parkingslot.dto.ParkingSlotDto;
-import com.example.demo.vehicle.dto.VehicleDto;
 import com.example.demo.parkingslot.model.ParkingSlot;
+import com.example.demo.vehicle.dto.VehicleDto;
 import com.example.demo.vehicle.model.Vehicle;
 
 public interface VehicleService {

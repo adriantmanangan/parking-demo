@@ -1,8 +1,8 @@
 package com.example.demo.vehicle.controller;
 
 import com.example.demo.base.constants.SuccessMessageResponse;
-import com.example.demo.vehicle.dto.VehicleDto;
 import com.example.demo.base.service.response.ResponseService;
+import com.example.demo.vehicle.dto.VehicleDto;
 import com.example.demo.vehicle.service.VehicleService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

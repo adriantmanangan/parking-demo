@@ -3,9 +3,9 @@ package com.example.demo.rate.dto;
 import java.math.BigDecimal;
 
 import com.example.demo.base.constants.Size;
+import com.example.demo.parking.fee.FeeCalculator;
 import com.example.demo.parkingslot.dto.ParkingSlotDto;
 import com.example.demo.vehicle.dto.VehicleDto;
-import com.example.demo.parking.fee.FeeCalculator;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

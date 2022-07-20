@@ -2,6 +2,7 @@ package com.example.demo.vehicle.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import javax.validation.constraints.NotBlank;
 
 import com.example.demo.base.constants.Size;
 import com.example.demo.parking.utils.DateUtils;
@@ -18,8 +19,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class VehicleDto {
 
+    @NotBlank(message = "vehicle.size.number.mandatory")
     private String plateNumber;
 
+    @NotBlank(message = "plate.number.mandatory")
     private Size size;
 
     @Builder.Default
