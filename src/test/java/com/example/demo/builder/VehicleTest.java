@@ -1,6 +1,6 @@
 package com.example.demo.builder;
 
-import com.example.demo.parking.dto.VehicleDto;
+import com.example.demo.vehicle.dto.VehicleDto;
 
 public interface VehicleTest{
 

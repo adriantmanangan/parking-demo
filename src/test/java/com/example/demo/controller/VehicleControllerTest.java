@@ -4,11 +4,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.demo.builder.VehicleTest;
-import com.example.demo.parking.constants.SuccessMessageResponse;
-import com.example.demo.parking.controller.VehicleController;
-import com.example.demo.parking.dto.VehicleDto;
-import com.example.demo.parking.service.response.ResponseService;
-import com.example.demo.parking.service.vehicle.VehicleService;
+import com.example.demo.base.constants.SuccessMessageResponse;
+import com.example.demo.vehicle.controller.VehicleController;
+import com.example.demo.vehicle.dto.VehicleDto;
+import com.example.demo.base.service.response.ResponseService;
+import com.example.demo.vehicle.service.VehicleService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

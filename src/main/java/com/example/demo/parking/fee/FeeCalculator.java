@@ -2,8 +2,8 @@ package com.example.demo.parking.fee;
 
 import java.math.BigDecimal;
 
-import com.example.demo.parking.dto.ParkingSlotDto;
-import com.example.demo.parking.dto.VehicleDto;
+import com.example.demo.parkingslot.dto.ParkingSlotDto;
+import com.example.demo.vehicle.dto.VehicleDto;
 
 public interface FeeCalculator {
 

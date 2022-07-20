@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import com.example.demo.parking.model.ParkingSlot;
+import com.example.demo.parkingslot.model.ParkingSlot;
 
 public class ParkingSlotUtils {
 

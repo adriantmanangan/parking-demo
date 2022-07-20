@@ -5,9 +5,9 @@ import java.util.Optional;
 
 import com.example.demo.parking.dto.ParkingDto;
 import com.example.demo.parking.mapper.ParkingMapper;
-import com.example.demo.parking.mapper.ParkingSlotContext;
+import com.example.demo.parkingslot.mapper.ParkingSlotContext;
 import com.example.demo.parking.repository.ParkingRepository;
-import com.example.demo.parking.service.response.ResponseService;
+import com.example.demo.base.service.response.ResponseService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
