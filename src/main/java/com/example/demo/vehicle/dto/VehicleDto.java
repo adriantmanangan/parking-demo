@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import javax.validation.constraints.NotBlank;
 
 import com.example.demo.base.constants.Size;
-import com.example.demo.parking.utils.DateUtils;
+import com.example.demo.base.utils.DateUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;

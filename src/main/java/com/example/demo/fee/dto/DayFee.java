@@ -1,14 +1,14 @@
-package com.example.demo.rate.dto;
+package com.example.demo.fee.dto;
 
 import java.math.BigDecimal;
 
-import com.example.demo.parking.utils.FeeUtils;
+import com.example.demo.base.utils.TimeUtils;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
-public class DayRate {
+public class DayFee {
 
     private BigDecimal rate;
 
@@ -18,9 +18,9 @@ public class DayRate {
      * @param dayRate dayRate
      * @param hourRate hourRate
      */
-    public DayRate(BigDecimal hours, BigDecimal dayRate, BigDecimal hourRate) {
-        BigDecimal day = FeeUtils.getDays(hours);
-        BigDecimal hour = FeeUtils.getHours(hours);
+    public DayFee(BigDecimal hours, BigDecimal dayRate, BigDecimal hourRate) {
+        BigDecimal day = TimeUtils.getDays(hours);
+        BigDecimal hour = TimeUtils.getHours(hours);
         if(hour.compareTo(BigDecimal.ZERO) > 0){
             hour = hour.multiply(hourRate);
         }

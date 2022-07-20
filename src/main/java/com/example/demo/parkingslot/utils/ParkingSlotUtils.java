@@ -1,4 +1,4 @@
-package com.example.demo.parking.utils;
+package com.example.demo.parkingslot.utils;
 
 import java.util.Comparator;
 import java.util.List;

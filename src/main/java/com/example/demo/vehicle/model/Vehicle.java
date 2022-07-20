@@ -12,7 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import com.example.demo.parking.utils.DateUtils;
+import com.example.demo.base.utils.DateUtils;
 import com.example.demo.parkingslot.model.ParkingSlot;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

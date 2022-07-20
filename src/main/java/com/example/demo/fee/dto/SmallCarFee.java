@@ -1,4 +1,4 @@
-package com.example.demo.rate.dto;
+package com.example.demo.fee.dto;
 
 import java.math.BigDecimal;
 
@@ -10,16 +10,16 @@ import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-@Component
 @Getter
-public class LargeCarFee implements FeeCalculator {
+@Component
+public class SmallCarFee implements FeeCalculator {
 
-    @Value("${parking.fee.large}")
+    @Value("${parking.fee.small}")
     private BigDecimal hourlyRate;
 
     @Override
     public boolean isSize(ParkingSlotDto parkingSlotDto) {
-        return parkingSlotDto.getSize() == Size.LARGE;
+        return parkingSlotDto.getSize() == Size.SMALL;
     }
 
     @Override

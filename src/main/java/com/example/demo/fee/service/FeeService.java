@@ -1,15 +1,15 @@
-package com.example.demo.rate.service;
+package com.example.demo.fee.service;
 
-import static com.example.demo.parking.utils.FeeUtils.isParkingTimeExceeds24Hrs;
+import static com.example.demo.base.utils.TimeUtils.isParkingTimeExceeds24Hrs;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 import com.example.demo.parking.fee.FeeCalculator;
-import com.example.demo.parking.utils.DateUtils;
+import com.example.demo.base.utils.TimeUtils;
 import com.example.demo.parkingslot.dto.ParkingSlotDto;
-import com.example.demo.rate.dto.DayRate;
-import com.example.demo.rate.dto.HourlyRate;
+import com.example.demo.fee.dto.DayFee;
+import com.example.demo.fee.dto.HourlyFee;
 import com.example.demo.vehicle.dto.VehicleDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +48,7 @@ public class FeeService {
      * @return computation of the parkingSlot.
      */
     public BigDecimal getHourlyDifference(BigDecimal hourRate, VehicleDto vehicleDto) {
-        BigDecimal diff = DateUtils.getDifferenceInHours(vehicleDto.getEntryTime(),vehicleDto.getExitTime());
+        BigDecimal diff = TimeUtils.getDifferenceInHours(vehicleDto.getEntryTime(),vehicleDto.getExitTime());
 
         return getRate(diff, hourRate);
     }
@@ -61,9 +61,9 @@ public class FeeService {
      */
     private BigDecimal getRate(BigDecimal hours, BigDecimal hourRate) {
         if (isParkingTimeExceeds24Hrs(hours)) {
-            return new DayRate(hours, dayRate, hourRate).getRate();
+            return new DayFee(hours, dayRate, hourRate).getRate();
         } else {
-            return new HourlyRate(hours, hourRate, flatRate).getRate();
+            return new HourlyFee(hours, hourRate, flatRate).getRate();
         }
     }
 }

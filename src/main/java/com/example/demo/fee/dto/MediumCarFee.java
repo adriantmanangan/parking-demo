@@ -1,4 +1,4 @@
-package com.example.demo.rate.dto;
+package com.example.demo.fee.dto;
 
 import java.math.BigDecimal;
 

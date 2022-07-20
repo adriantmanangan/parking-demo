@@ -8,14 +8,14 @@ import java.util.Optional;
 import com.example.demo.base.constants.ResponseMessageCode;
 import com.example.demo.base.constants.SuccessMessageResponse;
 import com.example.demo.base.service.response.ResponseService;
-import com.example.demo.parking.utils.DateUtils;
-import com.example.demo.parking.utils.ParkingSlotUtils;
+import com.example.demo.parkingslot.utils.ParkingSlotUtils;
+import com.example.demo.base.utils.TimeUtils;
 import com.example.demo.parkingslot.dto.ParkingSlotDto;
 import com.example.demo.parkingslot.mapper.ParkingSlotContext;
 import com.example.demo.parkingslot.mapper.ParkingSlotMapper;
 import com.example.demo.parkingslot.model.ParkingSlot;
 import com.example.demo.parkingslot.repository.ParkingSlotRepository;
-import com.example.demo.rate.service.FeeService;
+import com.example.demo.fee.service.FeeService;
 import com.example.demo.vehicle.dto.VehicleDto;
 import com.example.demo.vehicle.mapper.VehicleMapper;
 import com.example.demo.vehicle.model.Vehicle;
@@ -84,7 +84,7 @@ public class VehicleServiceImpl implements VehicleService {
      */
     @Override
     public void applyFees(VehicleDto vehicleDto, ParkingSlotDto parkingSlotDto) {
-        if(DateUtils.getDifferenceInMinutes(vehicleDto.getEntryTime(),vehicleDto.getExitTime()) > 60){
+        if(TimeUtils.isExitDateLess1Hr(vehicleDto)){
             feeService.compute(vehicleDto, parkingSlotDto);
         }
     }
