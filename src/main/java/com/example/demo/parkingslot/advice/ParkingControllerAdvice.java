@@ -1,7 +1,9 @@
 package com.example.demo.parkingslot.advice;
 
+import com.example.demo.base.exceptions.BaseException;
 import com.example.demo.base.exceptions.ValidationException;
 import com.example.demo.base.service.response.ResponseService;
+import com.example.demo.parking.exception.ParkingException;
 import com.example.demo.parkingslot.exception.ParkingSlotException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,12 +12,11 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.support.WebExchangeBindException;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
 @RequiredArgsConstructor
 @Slf4j
-public class ParkingControllerAdvice extends ResponseEntityExceptionHandler {
+public class ParkingControllerAdvice {
 
     private final ResponseService responseService;
 
@@ -50,6 +51,16 @@ public class ParkingControllerAdvice extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {ParkingSlotException.class})
     public ResponseEntity<ErrorResponse> handleResponseException(ParkingSlotException exception) {
         return responseService.generateErrorResponse(exception);
+    }
+
+    @ExceptionHandler(value = {ParkingException.class})
+    public ResponseEntity<ErrorResponse> handleResponseException(ParkingException exception) {
+        return responseService.generateErrorResponse(exception);
+    }
+
+    @ExceptionHandler(BaseException.class)
+    public ResponseEntity<ErrorResponse> handleLicenseValidationException(BaseException validationException) {
+        return responseService.badRequest(validationException.getErrors());
     }
 
 }

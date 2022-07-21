@@ -3,6 +3,7 @@ package com.example.demo.parking.controller;
 import java.util.List;
 import javax.validation.Valid;
 
+import com.example.demo.base.constants.SuccessMessageResponse;
 import com.example.demo.parking.dto.ParkingDto;
 import com.example.demo.parking.service.parking.ParkingService;
 import lombok.AllArgsConstructor;
@@ -30,7 +31,7 @@ public class ParkingController {
     }
 
     @GetMapping("/api/getParking/{reference}")
-    public ResponseEntity<ParkingDto> getParkingSlots(@PathVariable("reference") String reference){
+    public SuccessMessageResponse getParkingSlots(@PathVariable("reference") String reference){
         return parkingService.getAvailableParkingSlot(reference);
     }
 }

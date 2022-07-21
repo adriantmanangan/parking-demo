@@ -1,6 +1,7 @@
 package com.example.demo.parkingslot.dto;
 
 import java.util.Date;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import com.example.demo.base.constants.Size;

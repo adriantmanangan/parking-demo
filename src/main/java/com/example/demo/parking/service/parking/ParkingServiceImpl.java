@@ -3,8 +3,12 @@ package com.example.demo.parking.service.parking;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.demo.base.ResponseErrorCode;
+import com.example.demo.base.constants.ResponseMessageCode;
+import com.example.demo.base.constants.SuccessMessageResponse;
 import com.example.demo.base.service.response.ResponseService;
 import com.example.demo.parking.dto.ParkingDto;
+import com.example.demo.parking.exception.ParkingException;
 import com.example.demo.parking.mapper.ParkingMapper;
 import com.example.demo.parking.repository.ParkingRepository;
 import com.example.demo.parkingslot.mapper.ParkingSlotContext;
@@ -40,11 +44,11 @@ public class ParkingServiceImpl implements ParkingService{
     }
 
     @Override
-    public ResponseEntity<ParkingDto> getAvailableParkingSlot(String reference) {
-        return Optional.of(parkingRepository.findByParkingNumber(reference))
+    public SuccessMessageResponse getAvailableParkingSlot(String reference) {
+        return parkingRepository.findByParkingNumber(reference)
             .map(parkingMapper::mapToParkingDto)
-            .map(responseService::ok)
-            .orElseGet(responseService::badRequest);
+            .map(parkingDto -> responseService.createSuccessfulMessageResponse(ResponseMessageCode.SUCCESS_CREATE_PARKING, reference))
+            .orElseThrow(() ->new ParkingException(ResponseErrorCode.PARKING_NOT_FOUND, reference));
     }
 
 }

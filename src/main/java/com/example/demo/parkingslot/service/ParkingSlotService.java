@@ -6,6 +6,7 @@ import org.springframework.validation.Errors;
 
 public interface ParkingSlotService {
 
-    ResponseEntity<ParkingSlotDto> createParkingSlot(ParkingSlotDto parkingSlotDto, Errors errors);
+    ResponseEntity<ParkingSlotDto> createParkingSlot(ParkingSlotDto parkingSlotDto);
+
 
 }
