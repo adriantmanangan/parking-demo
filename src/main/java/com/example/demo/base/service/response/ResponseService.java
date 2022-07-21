@@ -43,22 +43,6 @@ public class ResponseService {
     }
 
     /**
-     * build bad request errors.
-     *
-     * @param errors - Errors from exception
-     * @return - response
-     */
-    public ResponseEntity<Object> badRequest(List<ErrorResponseItem> errors) {
-        ResponseEntity<Object> response;
-        if (errors.isEmpty()) {
-            response = ResponseEntity.badRequest().build();
-        } else {
-            response = buildErrors(errors);
-        }
-        return response;
-    }
-
-    /**
      * Generate @{@link ResponseEntity} for the WebExBindException.
      *
      * @param exception the dto to pass.
@@ -99,17 +83,19 @@ public class ResponseService {
         return generateResponseEntity(exception, responseErrorCode, errorResponse);
     }
 
+    /**
+     * Generate @{@link ResponseEntity} for the Application Error
+     * @param ex the @{@link Throwable} to pass
+     * @param errorCode instance of @{@link ResponseErrorCode}
+     * @param errorResponse instance of @{@link ErrorResponse}
+     * @return ResponseEntity object
+     */
     private ResponseEntity<ErrorResponse> generateResponseEntity(Throwable ex, ResponseErrorCode errorCode, ErrorResponse errorResponse) {
         log.error("ErrorResponse Error: {}", errorResponse);
         log.error("", ex);
         return ResponseEntity
             .status(errorCode.getStatus())
             .body(errorResponse);
-    }
-
-    private ResponseEntity<Object> buildErrors(List<ErrorResponseItem> errors) {
-        return ResponseEntity.badRequest()
-            .body(errorResponseService.multipleErrors(HttpStatus.BAD_REQUEST, errors));
     }
 
     public SuccessMessageResponse createSuccessfulMessageResponse(ResponseMessageCode responseMessage, Object... arguments) {

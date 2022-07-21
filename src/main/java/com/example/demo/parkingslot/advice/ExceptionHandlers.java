@@ -1,6 +1,5 @@
 package com.example.demo.parkingslot.advice;
 
-import com.example.demo.base.exceptions.BaseException;
 import com.example.demo.base.exceptions.ValidationException;
 import com.example.demo.base.service.response.ResponseService;
 import com.example.demo.parking.exception.ParkingException;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.support.WebExchangeBindException;
 @ControllerAdvice
 @RequiredArgsConstructor
 @Slf4j
-public class ParkingControllerAdvice {
+public class ExceptionHandlers {
 
     private final ResponseService responseService;
 
@@ -32,17 +31,6 @@ public class ParkingControllerAdvice {
     }
 
     /**
-     * Exception handlers for @{@link ValidationException}.
-     *
-     * @param ex the exception to pass.
-     * @return instance of @{@link ResponseEntity}.
-     */
-    @ExceptionHandler(ValidationException.class)
-    public ResponseEntity<Object> handleValidationException(ValidationException ex) {
-        return responseService.badRequest(ex.getErrorResponseItems());
-    }
-
-    /**
      * Exception handlers for @{@link ParkingSlotException}.
      *
      * @param exception the exception to pass.
@@ -53,13 +41,25 @@ public class ParkingControllerAdvice {
         return responseService.generateErrorResponse(exception);
     }
 
+    /**
+     * Exception handlers for @{@link ParkingException}.
+     *
+     * @param exception the exception to pass.
+     * @return instance of @{@link ResponseEntity}.
+     */
     @ExceptionHandler(value = {ParkingException.class})
     public ResponseEntity<ErrorResponse> handleResponseException(ParkingException exception) {
         return responseService.generateErrorResponse(exception);
     }
 
-    @ExceptionHandler(BaseException.class)
-    public ResponseEntity<ErrorResponse> handleLicenseValidationException(BaseException validationException) {
+    /**
+     * Exception handlers for @{@link ValidationException}.
+     *
+     * @param validationException the exception to pass.
+     * @return instance of @{@link ResponseEntity}.
+     */
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<ErrorResponse> handleLicenseValidationException(ValidationException validationException) {
         return responseService.badRequest(validationException.getErrors());
     }
 

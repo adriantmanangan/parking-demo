@@ -1,6 +1,6 @@
 package com.example.demo.base.utils;
 
-import com.example.demo.base.exceptions.BaseException;
+import com.example.demo.base.exceptions.ValidationException;
 import org.springframework.validation.Errors;
 
 public class ValidationUtils {
@@ -10,6 +10,6 @@ public class ValidationUtils {
 
     public static void rejectParkingSlot(Errors errors, String fields, String code) {
         errors.rejectValue(fields, code);
-        throw new BaseException(errors);
+        throw new ValidationException(errors);
     }
 }
