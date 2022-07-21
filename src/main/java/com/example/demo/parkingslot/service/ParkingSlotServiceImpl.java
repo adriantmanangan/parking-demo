@@ -4,6 +4,7 @@ import static com.example.demo.parkingslot.constants.ParkingConstants.PARKING_NO
 
 import java.util.Optional;
 
+import com.example.demo.base.ResponseErrorCode;
 import com.example.demo.base.service.response.ResponseService;
 import com.example.demo.parking.model.Parking;
 import com.example.demo.parking.repository.ParkingRepository;
@@ -37,7 +38,7 @@ public class ParkingSlotServiceImpl implements ParkingSlotService {
                 .map(responseService::ok)
                 .orElseGet(responseService::badRequest);
         } else {
-            throw new ParkingSlotException(PARKING_NOT_FOUND);
+            throw new ParkingSlotException(ResponseErrorCode.PARKING_NOT_FOUND, parkingSlotDto.getParkingDto().getParkingNumber());
         }
     }
 }
