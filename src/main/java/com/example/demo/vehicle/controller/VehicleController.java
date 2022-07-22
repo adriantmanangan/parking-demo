@@ -20,7 +20,7 @@ public class VehicleController {
 
     @PostMapping("/api/vehicle/park")
     public ResponseEntity<SuccessMessageResponse> parkVehicle(@RequestBody VehicleDto vehicleDto) {
-        return responseService.ok(vehicleService.addToParkingSlot(vehicleDto));
+        return responseService.ok(vehicleService.parkVehicle(vehicleDto));
     }
 
     @PutMapping("/api/vehicle/unpark")

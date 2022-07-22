@@ -12,7 +12,7 @@ public class ParkingSlotValidationServiceImpl implements ParkingSlotValidationSe
     @Override
     public void validateParkingSlot(ParkingSlotDto parkingSlotDto, Errors errors) throws ValidationException {
         if (parkingSlotDto.getParkingDto().getParkingNumber() == null) {
-            ValidationUtils.rejectParkingSlot(errors, "parkingDto", "NotNull.parkingDto");
+            ValidationUtils.reject(errors, "parkingDto", "NotNull.parkingDto");
         }
     }
 }

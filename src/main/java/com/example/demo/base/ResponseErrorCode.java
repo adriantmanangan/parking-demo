@@ -10,7 +10,9 @@ public enum ResponseErrorCode implements ApiErrorCode {
     PARKING_NOT_FOUND(HttpStatus.BAD_REQUEST, ErrorType.PARKING, "parking.not.found"),
     PARKING_SLOT_NOT_FOUND(HttpStatus.BAD_REQUEST, ErrorType.PARKING_SLOT, "parking.slot.not.found"),
     PARKING_SLOT_CREATION_FAILED(HttpStatus.BAD_REQUEST, ErrorType.PARKING_SLOT, "parking.slot.creation.unsuccessful"),
-    PARKING_SLOT_MISSING_PARKING_NUMBER(HttpStatus.BAD_REQUEST, ErrorType.PARKING_SLOT, "NotNull.parkingDto");
+    PARKING_SLOT_MISSING_PARKING_NUMBER(HttpStatus.BAD_REQUEST, ErrorType.PARKING_SLOT, "NotNull.parkingDto"),
+    VEHICLE_NOT_FOUND(HttpStatus.BAD_REQUEST, ErrorType.PARKING_SLOT, "vehicle.not.found"),
+    VEHICLE_PARKING_LOT_NOT_FOUND(HttpStatus.BAD_REQUEST, ErrorType.PARKING_SLOT, "vehicle.not.found");
 
     private final HttpStatus status;
     private final String msgCode;

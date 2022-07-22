@@ -1,13 +1,17 @@
 package com.example.demo.vehicle.service;
 
+import static com.example.demo.base.ResponseErrorCode.VEHICLE_NOT_FOUND;
+import static com.example.demo.base.ResponseErrorCode.VEHICLE_PARKING_LOT_NOT_FOUND;
 import static com.example.demo.base.converter.SizeEnumConverter.sizeToInteger;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import com.example.demo.base.ResponseErrorCode;
 import com.example.demo.base.constants.ResponseMessageCode;
 import com.example.demo.base.constants.SuccessMessageResponse;
 import com.example.demo.base.service.response.ResponseService;
+import com.example.demo.parking.exception.ParkingException;
 import com.example.demo.parkingslot.utils.ParkingSlotUtils;
 import com.example.demo.base.utils.TimeUtils;
 import com.example.demo.parkingslot.dto.ParkingSlotDto;
@@ -33,7 +37,14 @@ public class VehicleServiceImpl implements VehicleService {
     private final VehicleMapper vehicleMapper;
     private final ParkingSlotContext parkingSlotContext;
     private final FeeService feeService;
-    private final ParkingSlotMapper parkingSlotMapper;
+
+    @Override
+    public SuccessMessageResponse parkVehicle(VehicleDto vehicleDto) {
+        Optional <Vehicle> existingVehicle = vehicleRepository.findByPlateNumberAndIsPark(vehicleDto.getPlateNumber(), false);
+        existingVehicle.ifPresentOrElse(vehicle -> updateToParkingSlot(vehicleDto, vehicle), () -> addToParkingSlot(vehicleDto));;
+        return responseService.createSuccessfulMessageResponse(ResponseMessageCode.SUCCESS_PARK, vehicleDto.getPlateNumber());
+    }
+
 
     /**
      * @param vehicleDto vehicleDto
@@ -41,17 +52,21 @@ public class VehicleServiceImpl implements VehicleService {
      */
     @Override
     public SuccessMessageResponse addToParkingSlot(VehicleDto vehicleDto) {
-        Vehicle existingVehicle = vehicleRepository.findByPlateNumberAndIsPark(vehicleDto.getPlateNumber(), false);
         ParkingSlot parkingSlot = availableParkingSlot(vehicleDto).get();
         parkingSlotContext.setParkingSlot(parkingSlot);
-        if(existingVehicle != null){
-            updateExistingVehicle(vehicleDto,existingVehicle);
-        }else{
-            vehicleMapper.mapToVehicle(vehicleDto, parkingSlotContext);
-        }
+        vehicleMapper.mapToVehicle(vehicleDto, parkingSlotContext);
         parkingSlotRepository.save(parkingSlot);
         return responseService.createSuccessfulMessageResponse(ResponseMessageCode.SUCCESS_PARK, vehicleDto.getPlateNumber());
 
+    }
+
+    @Override
+    public SuccessMessageResponse updateToParkingSlot(VehicleDto vehicleDto, Vehicle existingVehicle) {
+        ParkingSlot parkingSlot = availableParkingSlot(vehicleDto).get();
+        parkingSlotContext.setParkingSlot(parkingSlot);
+        updateExistingVehicle(vehicleDto,existingVehicle);
+        parkingSlotRepository.save(parkingSlot);
+        return responseService.createSuccessfulMessageResponse(ResponseMessageCode.SUCCESS_PARK, vehicleDto.getPlateNumber());
     }
 
 
@@ -68,25 +83,25 @@ public class VehicleServiceImpl implements VehicleService {
      */
     @Override
     public SuccessMessageResponse unparkVehicle(VehicleDto vehicleDto) {
-        Vehicle parkedVehicle = vehicleRepository.findByPlateNumberAndIsPark(vehicleDto.getPlateNumber(), true);
-        vehicleMapper.updateVehicleDto(parkedVehicle,vehicleDto,parkingSlotContext);
-        ParkingSlot parkingSlot = parkingSlotRepository.findByVehicle(parkedVehicle).orElseGet(null);
-        ParkingSlotDto parkingSlotDto = parkingSlotMapper.mapToParkingSlotDto(parkingSlot);
-        applyFees(vehicleDto,parkingSlotDto);
-        updateParkingAndVehicle(vehicleDto,parkedVehicle,parkingSlot);
+        Vehicle parkedVehicle = vehicleRepository.findByPlateNumberAndIsPark(vehicleDto.getPlateNumber(), true)
+            .orElseThrow(() ->new ParkingException(VEHICLE_NOT_FOUND, vehicleDto.getPlateNumber()));
+
+        ParkingSlot vehicleParkingSlot = parkingSlotRepository.findByVehicle(parkedVehicle)
+            .orElseThrow(() ->new ParkingException(VEHICLE_PARKING_LOT_NOT_FOUND, vehicleDto.getPlateNumber()));
+
+        applyFees(vehicleDto, vehicleParkingSlot);
+        updateParkingAndVehicle(vehicleDto,parkedVehicle,vehicleParkingSlot);
         return responseService.createSuccessfulMessageResponse(ResponseMessageCode.SUCCESS_UNPARK, vehicleDto.getFee());
     }
 
     /**
      * Checks if applicable for fees by checking the vehicleEntryTime
      * @param vehicleDto vehicleDto
-     * @param parkingSlotDto parkingSlotDto
+     * @param parkingSlot parkingSlotDto
      */
     @Override
-    public void applyFees(VehicleDto vehicleDto, ParkingSlotDto parkingSlotDto) {
-        if(TimeUtils.isExitDateLess1Hr(vehicleDto)){
-            feeService.compute(vehicleDto, parkingSlotDto);
-        }
+    public void applyFees(VehicleDto vehicleDto, ParkingSlot parkingSlot) {
+         feeService.compute(vehicleDto, parkingSlot);
     }
 
     @Override

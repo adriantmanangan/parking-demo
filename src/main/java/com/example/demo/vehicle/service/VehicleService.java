@@ -12,11 +12,15 @@ public interface VehicleService {
 
     SuccessMessageResponse addToParkingSlot(VehicleDto vehicleDto);
 
+    SuccessMessageResponse updateToParkingSlot(VehicleDto vehicleDto,Vehicle existingVehicle);
+
+    SuccessMessageResponse parkVehicle(VehicleDto vehicleDto);
+
     Optional<ParkingSlot> availableParkingSlot(VehicleDto vehicleDto);
 
     SuccessMessageResponse unparkVehicle(VehicleDto vehicleDto);
 
-    void applyFees(VehicleDto vehicleDto, ParkingSlotDto parkingDto);
+    void applyFees(VehicleDto vehicleDto, ParkingSlot parkingSlot);
 
     void updateExistingVehicle(VehicleDto vehicleDto, Vehicle vehicle);
 

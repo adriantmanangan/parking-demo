@@ -48,7 +48,7 @@ public class ParkingServiceImpl implements ParkingService{
         return parkingRepository.findByParkingNumber(reference)
             .map(parkingMapper::mapToParkingDto)
             .map(parkingDto -> responseService.createSuccessfulMessageResponse(ResponseMessageCode.SUCCESS_CREATE_PARKING, reference))
-            .orElseThrow(() ->new ParkingException(ResponseErrorCode.PARKING_NOT_FOUND, reference));
+            .orElseThrow(() -> new ParkingException(ResponseErrorCode.PARKING_NOT_FOUND, reference));
     }
 
 }

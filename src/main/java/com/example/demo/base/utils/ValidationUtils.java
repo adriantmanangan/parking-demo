@@ -8,7 +8,7 @@ public class ValidationUtils {
     private ValidationUtils() {
     }
 
-    public static void rejectParkingSlot(Errors errors, String fields, String code) {
+    public static void reject(Errors errors, String fields, String code) {
         errors.rejectValue(fields, code);
         throw new ValidationException(errors);
     }
