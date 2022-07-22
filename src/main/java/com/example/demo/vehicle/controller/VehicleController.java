@@ -3,6 +3,7 @@ package com.example.demo.vehicle.controller;
 import com.example.demo.base.constants.SuccessMessageResponse;
 import com.example.demo.base.service.response.ResponseService;
 import com.example.demo.vehicle.dto.VehicleDto;
+import com.example.demo.vehicle.dto.VehicleUnparkDto;
 import com.example.demo.vehicle.service.VehicleService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 public class VehicleController {
-
     private final VehicleService vehicleService;
     private final ResponseService responseService;
 
@@ -24,7 +24,7 @@ public class VehicleController {
     }
 
     @PutMapping("/api/vehicle/unpark")
-    public ResponseEntity <SuccessMessageResponse> unparkVehicle(@RequestBody VehicleDto vehicleDto){
+    public ResponseEntity <SuccessMessageResponse> unparkVehicle(@RequestBody VehicleUnparkDto vehicleDto){
         return responseService.ok(vehicleService.unparkVehicle(vehicleDto));
     }
 }

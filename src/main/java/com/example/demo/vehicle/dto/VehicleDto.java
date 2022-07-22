@@ -41,4 +41,7 @@ public class VehicleDto {
     @Builder.Default
     private boolean isPark= false;
 
+    @Builder.Default
+    private boolean isContinuous = false;
+
 }

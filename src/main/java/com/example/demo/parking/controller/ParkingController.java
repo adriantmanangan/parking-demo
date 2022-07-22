@@ -20,17 +20,17 @@ public class ParkingController {
 
     private final ParkingService parkingService;
 
-    @PostMapping("/api/createParking")
+    @PostMapping("/api/parking")
     public ResponseEntity<ParkingDto> createParkingSlot(@RequestBody @Valid ParkingDto parkingDto){
         return parkingService.createParking(parkingDto);
     }
 
-    @PostMapping("/api/createParkingList")
+    @PostMapping("/api/parkings")
     public ResponseEntity<List<ParkingDto>> createParkingSlotList(@RequestBody List<ParkingDto> parkingDtoList){
         return parkingService.createParkingList(parkingDtoList);
     }
 
-    @GetMapping("/api/getParking/{reference}")
+    @GetMapping("/api/parking/{reference}")
     public SuccessMessageResponse getParkingSlots(@PathVariable("reference") String reference){
         return parkingService.getAvailableParkingSlot(reference);
     }

@@ -1,31 +1,31 @@
 package com.example.demo.vehicle.service;
 
-import static com.example.demo.base.ResponseErrorCode.VEHICLE_NOT_FOUND;
-import static com.example.demo.base.ResponseErrorCode.VEHICLE_PARKING_LOT_NOT_FOUND;
-import static com.example.demo.base.converter.SizeEnumConverter.sizeToInteger;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
-
-import com.example.demo.base.ResponseErrorCode;
 import com.example.demo.base.constants.ResponseMessageCode;
 import com.example.demo.base.constants.SuccessMessageResponse;
 import com.example.demo.base.service.response.ResponseService;
-import com.example.demo.parking.exception.ParkingException;
-import com.example.demo.parkingslot.utils.ParkingSlotUtils;
 import com.example.demo.base.utils.TimeUtils;
-import com.example.demo.parkingslot.dto.ParkingSlotDto;
+import com.example.demo.fee.constants.TimeConstants;
+import com.example.demo.fee.service.FeeService;
+import com.example.demo.parking.exception.ParkingException;
 import com.example.demo.parkingslot.mapper.ParkingSlotContext;
-import com.example.demo.parkingslot.mapper.ParkingSlotMapper;
 import com.example.demo.parkingslot.model.ParkingSlot;
 import com.example.demo.parkingslot.repository.ParkingSlotRepository;
-import com.example.demo.fee.service.FeeService;
+import com.example.demo.parkingslot.utils.ParkingSlotUtils;
 import com.example.demo.vehicle.dto.VehicleDto;
+import com.example.demo.vehicle.dto.VehicleUnparkDto;
 import com.example.demo.vehicle.mapper.VehicleMapper;
 import com.example.demo.vehicle.model.Vehicle;
 import com.example.demo.vehicle.repository.VehicleRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+import static com.example.demo.base.ResponseErrorCode.VEHICLE_NOT_FOUND;
+import static com.example.demo.base.ResponseErrorCode.VEHICLE_PARKING_LOT_NOT_FOUND;
+import static com.example.demo.base.converter.SizeEnumConverter.sizeToInteger;
 
 @AllArgsConstructor
 @Component
@@ -40,11 +40,10 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public SuccessMessageResponse parkVehicle(VehicleDto vehicleDto) {
-        Optional <Vehicle> existingVehicle = vehicleRepository.findByPlateNumberAndIsPark(vehicleDto.getPlateNumber(), false);
-        existingVehicle.ifPresentOrElse(vehicle -> updateToParkingSlot(vehicleDto, vehicle), () -> addToParkingSlot(vehicleDto));;
+        Optional<Vehicle> existingVehicle = vehicleRepository.findByPlateNumberAndIsPark(vehicleDto.getPlateNumber(), false);
+        existingVehicle.ifPresentOrElse(vehicle -> updateToParkingSlot(vehicleDto, vehicle), () -> addToParkingSlot(vehicleDto));
         return responseService.createSuccessfulMessageResponse(ResponseMessageCode.SUCCESS_PARK, vehicleDto.getPlateNumber());
     }
-
 
     /**
      * @param vehicleDto vehicleDto
@@ -64,55 +63,64 @@ public class VehicleServiceImpl implements VehicleService {
     public SuccessMessageResponse updateToParkingSlot(VehicleDto vehicleDto, Vehicle existingVehicle) {
         ParkingSlot parkingSlot = availableParkingSlot(vehicleDto).get();
         parkingSlotContext.setParkingSlot(parkingSlot);
-        updateExistingVehicle(vehicleDto,existingVehicle);
+        updateExistingVehicle(vehicleDto, existingVehicle);
         parkingSlotRepository.save(parkingSlot);
         return responseService.createSuccessfulMessageResponse(ResponseMessageCode.SUCCESS_PARK, vehicleDto.getPlateNumber());
     }
 
-
     @Override
     public Optional<ParkingSlot> availableParkingSlot(VehicleDto vehicleDto) {
-        return parkingSlotRepository.findAllByIsAvailableAndSize(true, sizeToInteger(vehicleDto.getSize()))
-            .map(ParkingSlotUtils::getNearestParkingSlot);
+        return parkingSlotRepository.findAllByIsAvailableAndSize(true, sizeToInteger(vehicleDto.getSize())).map(ParkingSlotUtils::getNearestParkingSlot);
     }
 
     /**
      * Remove vehicle from parking slot, but
-     * @param vehicleDto vehicleDto
+     *
+     * @param vehicleUnparkDto vehicleDto
      * @return Message response sucess
      */
     @Override
-    public SuccessMessageResponse unparkVehicle(VehicleDto vehicleDto) {
-        Vehicle parkedVehicle = vehicleRepository.findByPlateNumberAndIsPark(vehicleDto.getPlateNumber(), true)
-            .orElseThrow(() ->new ParkingException(VEHICLE_NOT_FOUND, vehicleDto.getPlateNumber()));
+    public SuccessMessageResponse unparkVehicle(VehicleUnparkDto vehicleUnparkDto) {
+        VehicleDto vehicleDto = vehicleMapper.mapToVehicleDto(vehicleUnparkDto);
+        Vehicle parkedVehicle = vehicleRepository.findByPlateNumberAndIsPark(vehicleDto.getPlateNumber(), true).
+                orElseThrow(() -> new ParkingException(VEHICLE_NOT_FOUND, vehicleDto.getPlateNumber()));
 
-        ParkingSlot vehicleParkingSlot = parkingSlotRepository.findByVehicle(parkedVehicle)
-            .orElseThrow(() ->new ParkingException(VEHICLE_PARKING_LOT_NOT_FOUND, vehicleDto.getPlateNumber()));
+        ParkingSlot vehicleParkingSlot = parkingSlotRepository.findByVehicle(parkedVehicle).
+                orElseThrow(() -> new ParkingException(VEHICLE_PARKING_LOT_NOT_FOUND, vehicleDto.getPlateNumber()));
 
         applyFees(vehicleDto, vehicleParkingSlot);
-        updateParkingAndVehicle(vehicleDto,parkedVehicle,vehicleParkingSlot);
+        updateParkingAndVehicle(vehicleDto, parkedVehicle, vehicleParkingSlot);
         return responseService.createSuccessfulMessageResponse(ResponseMessageCode.SUCCESS_UNPARK, vehicleDto.getFee());
     }
 
     /**
      * Checks if applicable for fees by checking the vehicleEntryTime
-     * @param vehicleDto vehicleDto
+     *
+     * @param vehicleDto  vehicleDto
      * @param parkingSlot parkingSlotDto
      */
     @Override
     public void applyFees(VehicleDto vehicleDto, ParkingSlot parkingSlot) {
-         feeService.compute(vehicleDto, parkingSlot);
+        handleContinuousVehicle(vehicleDto);
+        feeService.compute(vehicleDto, parkingSlot);
+    }
+
+    public void handleContinuousVehicle(VehicleDto vehicleDto) {
+        if (TimeUtils.getDifferenceInHours(vehicleDto.getEntryTime(), vehicleDto.getExitTime())
+                .compareTo(new BigDecimal(TimeConstants.MINUTES_HOURS)) >= 0) {
+            vehicleDto.setContinuous(true);
+        }
     }
 
     @Override
-    public void updateExistingVehicle(VehicleDto vehicleDto, Vehicle existingVehicle){
+    public void updateExistingVehicle(VehicleDto vehicleDto, Vehicle existingVehicle) {
         vehicleDto.setReturnTime(LocalDateTime.now());
-        vehicleMapper.updateVehicle(vehicleDto,existingVehicle,parkingSlotContext);
+        vehicleMapper.updateVehicle(vehicleDto, existingVehicle, parkingSlotContext);
     }
 
     @Override
-    public void updateParkingAndVehicle(VehicleDto vehicleDto, Vehicle parkedVehicle, ParkingSlot parkingSlot ){
-        vehicleMapper.updateVehicle(vehicleDto,parkedVehicle,parkingSlotContext);
+    public void updateParkingAndVehicle(VehicleDto vehicleDto, Vehicle parkedVehicle, ParkingSlot parkingSlot) {
+        vehicleMapper.updateVehicle(vehicleDto, parkedVehicle, parkingSlotContext);
         parkingSlot.removeVehicle();
         parkingSlotRepository.save(parkingSlot);
     }

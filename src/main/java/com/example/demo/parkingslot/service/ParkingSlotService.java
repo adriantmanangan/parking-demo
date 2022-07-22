@@ -5,8 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 
 public interface ParkingSlotService {
-
     ResponseEntity<ParkingSlotDto> createParkingSlot(ParkingSlotDto parkingSlotDto);
-
 
 }
