@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.demo.base.ResponseErrorCode;
-import com.example.demo.base.constants.ResponseMessageCode;
-import com.example.demo.base.constants.SuccessMessageResponse;
 import com.example.demo.base.service.response.ResponseService;
 import com.example.demo.parking.dto.ParkingDto;
 import com.example.demo.parking.exception.ParkingException;
@@ -44,10 +42,10 @@ public class ParkingServiceImpl implements ParkingService{
     }
 
     @Override
-    public SuccessMessageResponse getAvailableParkingSlot(String reference) {
+    public ResponseEntity<ParkingDto> getAvailableParkingSlot(String reference) {
         return parkingRepository.findByParkingNumber(reference)
             .map(parkingMapper::mapToParkingDto)
-            .map(parkingDto -> responseService.createSuccessfulMessageResponse(ResponseMessageCode.SUCCESS_CREATE_PARKING, reference))
+            .map(responseService::ok)
             .orElseThrow(() -> new ParkingException(ResponseErrorCode.PARKING_NOT_FOUND, reference));
     }
 

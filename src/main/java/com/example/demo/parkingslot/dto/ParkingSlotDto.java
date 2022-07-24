@@ -2,9 +2,11 @@ package com.example.demo.parkingslot.dto;
 
 import java.util.Date;
 import javax.validation.Valid;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
 import com.example.demo.base.constants.Size;
+import com.example.demo.base.validator.EnumSizeValidation;
 import com.example.demo.parking.dto.ParkingDto;
 import com.example.demo.vehicle.dto.VehicleDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,7 +23,9 @@ public class ParkingSlotDto {
 
     private Long distanceFromTheEntrance;
 
-    private Size size;
+    @NotNull(message = "parking.slot.size.mandatory")
+    @EnumSizeValidation(enumClass = Size.class, message = "Invalid Size")
+    private String size;
 
     @JsonIgnore
     @Builder.Default
@@ -33,7 +37,6 @@ public class ParkingSlotDto {
     @JsonIgnore
     private Date dateCreated;
 
-    @NotNull(message = "parking.not.found")
     private ParkingDto parkingDto;
 
     @JsonIgnore

@@ -21,7 +21,7 @@ public class VehicleValidationController {
     @PostMapping("/api/vehicle/validate")
     public SuccessMessageResponse parkVehicle(@RequestBody VehicleDto vehicleDto, Errors errors) {
         vehicleValidationService.validate(vehicleDto, errors);
-        return responseService.createSuccessfulMessageResponse(ResponseMessageCode.SUCCESS_PARK);
+        return responseService.createSuccessfulMessageResponse(ResponseMessageCode.VEHICLE_VALIDATION_NO_ERRORS);
     }
 
 }

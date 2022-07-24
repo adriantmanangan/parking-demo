@@ -52,17 +52,22 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public SuccessMessageResponse addToParkingSlot(VehicleDto vehicleDto) {
         ParkingSlot parkingSlot = availableParkingSlot(vehicleDto).get();
-        parkingSlotContext.setParkingSlot(parkingSlot);
+        updateExistingParkingSlot(parkingSlot);
         vehicleMapper.mapToVehicle(vehicleDto, parkingSlotContext);
         parkingSlotRepository.save(parkingSlot);
         return responseService.createSuccessfulMessageResponse(ResponseMessageCode.SUCCESS_PARK, vehicleDto.getPlateNumber());
 
     }
 
+    private void updateExistingParkingSlot(ParkingSlot parkingSlot) {
+        parkingSlotContext.setParkingSlot(parkingSlot);
+        parkingSlot.setIsAvailable(false);
+    }
+
     @Override
     public SuccessMessageResponse updateToParkingSlot(VehicleDto vehicleDto, Vehicle existingVehicle) {
         ParkingSlot parkingSlot = availableParkingSlot(vehicleDto).get();
-        parkingSlotContext.setParkingSlot(parkingSlot);
+        updateExistingParkingSlot(parkingSlot);
         updateExistingVehicle(vehicleDto, existingVehicle);
         parkingSlotRepository.save(parkingSlot);
         return responseService.createSuccessfulMessageResponse(ResponseMessageCode.SUCCESS_PARK, vehicleDto.getPlateNumber());

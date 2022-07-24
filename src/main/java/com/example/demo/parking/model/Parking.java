@@ -38,4 +38,5 @@ public class Parking {
 
     @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
     private List<ParkingSlot> parkingSlotList = new ArrayList<>();
+
 }

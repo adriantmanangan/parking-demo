@@ -31,6 +31,7 @@ public class ParkingSlotContext {
     @BeforeMapping
     public void setParking(@MappingTarget Parking parking) {
         this.parking = parking;
+        this.parking.getParkingSlotList().add(parkingSlot);
     }
 
 

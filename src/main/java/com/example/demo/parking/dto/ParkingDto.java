@@ -2,6 +2,7 @@ package com.example.demo.parking.dto;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -22,5 +23,6 @@ public class ParkingDto {
 
     @Builder.Default
     @Size(min = 3,message = "parking.slots.minimum")
+    @Valid
     private List<ParkingSlotDto> parkingSlotList = new ArrayList<>();
 }

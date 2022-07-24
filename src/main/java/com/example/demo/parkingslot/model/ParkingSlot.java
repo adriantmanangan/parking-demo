@@ -77,5 +77,6 @@ public class ParkingSlot {
     public void removeVehicle(){
         this.vehicle.setIsPark(false);
         this.vehicle = null;
+        this.isAvailable = true;
     }
 }

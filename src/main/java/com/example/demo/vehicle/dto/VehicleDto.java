@@ -6,6 +6,7 @@ import javax.validation.constraints.NotBlank;
 
 import com.example.demo.base.constants.Size;
 import com.example.demo.base.utils.DateUtils;
+import com.example.demo.base.validator.EnumSizeValidation;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,7 @@ public class VehicleDto {
     @NotBlank(message = "vehicle.size.number.mandatory")
     private String plateNumber;
 
+    @EnumSizeValidation(enumClass = Size.class, message = "Invalid Size")
     @NotBlank(message = "plate.number.mandatory")
     private Size size;
 

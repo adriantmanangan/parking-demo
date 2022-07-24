@@ -23,7 +23,7 @@ public class VehicleUnparkDto {
     @NotBlank(message = "plate.number.mandatory")
     private Size size;
 
-    @NotBlank(message = "exit.time.mandatory")
+    @NotBlank(message = "vehicle.exitTime.mandatory")
     @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, shape = JsonFormat.Shape.STRING)
     private LocalDateTime exitTime;
 

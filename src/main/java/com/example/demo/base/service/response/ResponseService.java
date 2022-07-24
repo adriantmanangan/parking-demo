@@ -1,6 +1,8 @@
 package com.example.demo.base.service.response;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.example.demo.base.ErrorResponseItem;
 import com.example.demo.base.ResponseErrorCode;
@@ -18,7 +20,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.support.WebExchangeBindException;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -101,5 +105,22 @@ public class ResponseService {
     public SuccessMessageResponse createSuccessfulMessageResponse(ResponseMessageCode responseMessage, Object... arguments) {
         String msg = messageSource.getMessage(responseMessage.getMsgCode(), arguments, LocaleContextHolder.getLocale());
         return new SuccessMessageResponse(msg);
+    }
+
+    public ResponseEntity<ErrorResponse> badRequest(ConstraintViolationException exception) {
+        return ResponseEntity.badRequest().body(multipleErrors(ResponseErrorCode.VALIDATION_ERROR, exception.getConstraintViolations()));
+    }
+    private ErrorResponse multipleErrors(ResponseErrorCode code, Set<ConstraintViolation<?>> constraintViolations) {
+        List<ErrorResponseItem> errorResponseItems = constraintViolations
+                .stream()
+                .map(error -> {
+                    String errorMessage = messageSource.getMessage(error.getMessage(), null, error.getMessage(),
+                            LocaleContextHolder.getLocale());
+                    return new ErrorResponseItem(code, errorMessage);
+                })
+                .collect(Collectors.toList());
+
+        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), errorResponseItems);
+
     }
 }

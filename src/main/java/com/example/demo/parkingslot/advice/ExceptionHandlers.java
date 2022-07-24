@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.support.WebExchangeBindException;
 
+import javax.validation.ConstraintViolationException;
+
 @ControllerAdvice
 @RequiredArgsConstructor
 @Slf4j
@@ -58,9 +60,14 @@ public class ExceptionHandlers {
      * @param validationException the exception to pass.
      * @return instance of @{@link ResponseEntity}.
      */
-    @ExceptionHandler(ValidationException.class)
+    @ExceptionHandler(value = {ValidationException.class})
     public ResponseEntity<ErrorResponse> handleLicenseValidationException(ValidationException validationException) {
         return responseService.badRequest(validationException.getErrors());
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ErrorResponse> handleLicenseValidationException(ConstraintViolationException validationException) {
+        return responseService.badRequest(validationException);
     }
 
 }
