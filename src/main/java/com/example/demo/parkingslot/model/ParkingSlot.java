@@ -41,6 +41,8 @@ public class ParkingSlot {
     @Column(name = "VERSION")
     private Long version;
 
+    private String parkingSlotNumber;
+
     private Long distanceFromTheEntrance;
 
     private Integer size;
@@ -78,5 +80,6 @@ public class ParkingSlot {
         this.vehicle.setIsPark(false);
         this.vehicle = null;
         this.isAvailable = true;
+
     }
 }

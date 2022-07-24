@@ -12,15 +12,13 @@ import org.springframework.http.ResponseEntity;
 
 public interface VehicleService {
 
-    SuccessMessageResponse addToParkingSlot(VehicleDto vehicleDto);
+    SuccessMessageResponse addToParkingSlot(VehicleDto vehicleDto, String reference);
 
-    SuccessMessageResponse updateToParkingSlot(VehicleDto vehicleDto,Vehicle existingVehicle);
+    SuccessMessageResponse updateToParkingSlot(VehicleDto vehicleDto,Vehicle existingVehicle, String reference);
 
-    SuccessMessageResponse parkVehicle(VehicleDto vehicleDto);
+    SuccessMessageResponse parkVehicle(VehicleDto vehicleDto, String parkingNumber);
 
-    Optional<ParkingSlot> availableParkingSlot(VehicleDto vehicleDto);
-
-    SuccessMessageResponse unparkVehicle(VehicleUnparkDto vehicleDto);
+    SuccessMessageResponse unparkVehicle(VehicleUnparkDto vehicleDto, String parkingNumber);
 
     void applyFees(VehicleDto vehicleDto, ParkingSlot parkingSlot);
 

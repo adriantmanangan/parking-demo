@@ -40,8 +40,7 @@ public class VehicleDto {
 
     private BigDecimal fee;
 
-    @Builder.Default
-    private boolean isPark= false;
+    private Boolean isPark;
 
     @Builder.Default
     private boolean isContinuous = false;

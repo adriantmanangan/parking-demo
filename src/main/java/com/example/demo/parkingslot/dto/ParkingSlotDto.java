@@ -21,6 +21,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ParkingSlotDto {
 
+    private String parkingSlotNumber;
+
     private Long distanceFromTheEntrance;
 
     @NotNull(message = "parking.slot.size.mandatory")
@@ -37,6 +39,7 @@ public class ParkingSlotDto {
     @JsonIgnore
     private Date dateCreated;
 
+    @JsonIgnore
     private ParkingDto parkingDto;
 
     @JsonIgnore

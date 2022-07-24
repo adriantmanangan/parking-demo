@@ -7,10 +7,7 @@ import com.example.demo.vehicle.dto.VehicleUnparkDto;
 import com.example.demo.vehicle.service.VehicleService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
@@ -18,13 +15,13 @@ public class VehicleController {
     private final VehicleService vehicleService;
     private final ResponseService responseService;
 
-    @PostMapping("/api/vehicle/park")
-    public ResponseEntity<SuccessMessageResponse> parkVehicle(@RequestBody VehicleDto vehicleDto) {
-        return responseService.ok(vehicleService.parkVehicle(vehicleDto));
+    @PostMapping("/api/vehicle/park/{parkingNumber}")
+    public ResponseEntity<SuccessMessageResponse> parkVehicle(@RequestBody VehicleDto vehicleDto, @PathVariable String parkingNumber) {
+        return responseService.ok(vehicleService.parkVehicle(vehicleDto,parkingNumber));
     }
 
-    @PutMapping("/api/vehicle/unpark")
-    public ResponseEntity <SuccessMessageResponse> unparkVehicle(@RequestBody VehicleUnparkDto vehicleDto){
-        return responseService.ok(vehicleService.unparkVehicle(vehicleDto));
+    @PutMapping("/api/vehicle/unpark/{parkingNumber}")
+    public ResponseEntity <SuccessMessageResponse> unparkVehicle(@RequestBody VehicleUnparkDto vehicleDto, @PathVariable String parkingNumber){
+        return responseService.ok(vehicleService.unparkVehicle(vehicleDto,parkingNumber));
     }
 }

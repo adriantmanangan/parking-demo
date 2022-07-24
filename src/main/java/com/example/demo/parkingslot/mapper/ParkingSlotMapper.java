@@ -22,7 +22,7 @@ public interface ParkingSlotMapper {
     ParkingSlot mapToParkingSlot(ParkingSlotDto parkingSlotDto, @Context ParkingSlotContext parkingSlotContext);
 
     @Mapping(target = "version", ignore = true)
-    Parking mapParkingToParkingSlot(Parking parking, ParkingSlot parkingSlot, @Context ParkingSlotContext parkingSlotContext);
+    Parking mapParkingToParkingSlot(ParkingSlotDto parkingSlotDto, @MappingTarget Parking parking, @Context ParkingSlotContext parkingSlotContext);
 
 
 

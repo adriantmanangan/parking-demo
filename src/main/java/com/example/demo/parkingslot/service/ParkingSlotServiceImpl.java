@@ -10,6 +10,7 @@ import com.example.demo.parkingslot.dto.ParkingSlotDto;
 import com.example.demo.parkingslot.exception.ParkingSlotException;
 import com.example.demo.parkingslot.mapper.ParkingSlotContext;
 import com.example.demo.parkingslot.mapper.ParkingSlotMapper;
+import com.example.demo.parkingslot.model.ParkingSlot;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -28,15 +29,15 @@ public class ParkingSlotServiceImpl implements ParkingSlotService {
 
     @Override
     public ResponseEntity<ParkingDto> addParkingSlot(ParkingSlotDto parkingSlotDto, String parkingNumber) {
-        Parking parking = parkingRepository.findByParkingNumber(parkingSlotDto.getParkingDto().getParkingNumber())
-                .orElseThrow(() -> new ParkingSlotException(ResponseErrorCode.PARKING_NOT_FOUND, parkingSlotDto.getParkingDto().getParkingNumber()));
-
-        return Optional.of(parkingSlotMapper.mapToParkingSlot(parkingSlotDto, parkingSlotContext))
-                .map(parkingSlot -> parkingSlotMapper.mapParkingToParkingSlot(parking, parkingSlot, parkingSlotContext))
-                .map(parkingRepository::save)
-                .map(parkingMapper::mapToParkingDto)
+        Parking parking = parkingRepository.findByParkingNumber(parkingNumber)
+                .orElseThrow(() -> new ParkingSlotException(ResponseErrorCode.PARKING_NOT_FOUND, parkingNumber));
+        parkingSlotContext.setParking(parking);
+        ParkingSlot parkingSlot = parkingSlotMapper.mapToParkingSlot(parkingSlotDto, parkingSlotContext);
+        parking.getParkingSlotList().add(parkingSlot);
+       return Optional.of(parkingRepository.save(parking)).map(parkingMapper::mapToParkingDto)
                 .map(responseService::ok)
                 .orElse(responseService.badRequest());
+
     }
 }
 

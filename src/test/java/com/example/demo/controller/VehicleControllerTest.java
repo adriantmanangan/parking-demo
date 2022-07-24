@@ -50,7 +50,7 @@ public class VehicleControllerTest implements VehicleTest{
     void parkVehicle() throws Exception {
         VehicleDto vehicleDto = newVehicleDto();
         SuccessMessageResponse successMessageResponse = new SuccessMessageResponse();
-        Mockito.when(vehicleService.addToParkingSlot(Mockito.any(VehicleDto.class))).thenReturn(successMessageResponse);
+        Mockito.when(vehicleService.addToParkingSlot(Mockito.any(VehicleDto.class), Mockito.any(String.class))).thenReturn(successMessageResponse);
         Mockito.when(responseService.ok(Mockito.any(VehicleDto.class))).thenReturn(ResponseEntity.ok(vehicleDto));
 
         mockMvc.perform(post("/api/vehicle/park")

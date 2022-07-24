@@ -22,10 +22,14 @@ public interface VehicleMapper {
 
     @Mapping(source = "size",target = "size",qualifiedByName = {"enumSizeToInteger"})
     Vehicle mapToVehicle(VehicleDto vehicleDto, @Context ParkingSlotContext parkingSlotContext);
+    @Mapping(source = "size",target = "size",qualifiedByName = {"enumSizeToInteger"})
+    @Mapping(source = "isPark",target = "isPark",defaultValue= "true")
+    Vehicle parkVehicle(VehicleDto vehicleDto, @Context ParkingSlotContext parkingSlotContext);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
         nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
     @Mapping(source = "size",target = "size",qualifiedByName = {"enumSizeToInteger"})
+    @Mapping(source = "isPark",target = "isPark",defaultValue= "true")
     Vehicle updateVehicle(VehicleDto vehicleDto, @MappingTarget Vehicle vehicle,@Context ParkingSlotContext parkingSlotContext);
 
     VehicleDto mapToVehicleDto(VehicleUnparkDto vehicleUnparkDto);

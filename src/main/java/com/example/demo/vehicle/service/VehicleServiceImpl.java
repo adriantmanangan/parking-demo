@@ -1,5 +1,6 @@
 package com.example.demo.vehicle.service;
 
+import com.example.demo.base.ResponseErrorCode;
 import com.example.demo.base.constants.ResponseMessageCode;
 import com.example.demo.base.constants.SuccessMessageResponse;
 import com.example.demo.base.service.response.ResponseService;
@@ -7,6 +8,9 @@ import com.example.demo.base.utils.TimeUtils;
 import com.example.demo.fee.constants.TimeConstants;
 import com.example.demo.fee.service.FeeService;
 import com.example.demo.parking.exception.ParkingException;
+import com.example.demo.parking.model.Parking;
+import com.example.demo.parking.repository.ParkingRepository;
+import com.example.demo.parkingslot.exception.ParkingSlotException;
 import com.example.demo.parkingslot.mapper.ParkingSlotContext;
 import com.example.demo.parkingslot.model.ParkingSlot;
 import com.example.demo.parkingslot.repository.ParkingSlotRepository;
@@ -21,6 +25,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import static com.example.demo.base.ResponseErrorCode.VEHICLE_NOT_FOUND;
@@ -38,10 +43,13 @@ public class VehicleServiceImpl implements VehicleService {
     private final ParkingSlotContext parkingSlotContext;
     private final FeeService feeService;
 
+    private final ParkingRepository parkingRepository;
+
     @Override
-    public SuccessMessageResponse parkVehicle(VehicleDto vehicleDto) {
+    public SuccessMessageResponse parkVehicle(VehicleDto vehicleDto, String parkingNumber) {
         Optional<Vehicle> existingVehicle = vehicleRepository.findByPlateNumberAndIsPark(vehicleDto.getPlateNumber(), false);
-        existingVehicle.ifPresentOrElse(vehicle -> updateToParkingSlot(vehicleDto, vehicle), () -> addToParkingSlot(vehicleDto));
+        existingVehicle.ifPresentOrElse(vehicle -> updateToParkingSlot(vehicleDto, vehicle, parkingNumber),
+                () -> addToParkingSlot(vehicleDto, parkingNumber));
         return responseService.createSuccessfulMessageResponse(ResponseMessageCode.SUCCESS_PARK, vehicleDto.getPlateNumber());
     }
 
@@ -50,32 +58,39 @@ public class VehicleServiceImpl implements VehicleService {
      * @return SuccessMessageResponse for vehicle parking
      */
     @Override
-    public SuccessMessageResponse addToParkingSlot(VehicleDto vehicleDto) {
-        ParkingSlot parkingSlot = availableParkingSlot(vehicleDto).get();
+    public SuccessMessageResponse addToParkingSlot(VehicleDto vehicleDto, String reference) {
+        Parking parking = parkingRepository.findByParkingNumber(reference).get();
+        ParkingSlot parkingSlot = availableParkingSlot(parking.getParkingSlotList());
+        parkingSlotContext.setParking(parking);
+        parkingSlotContext.setParkingSlotParking(parkingSlot);
         updateExistingParkingSlot(parkingSlot);
-        vehicleMapper.mapToVehicle(vehicleDto, parkingSlotContext);
-        parkingSlotRepository.save(parkingSlot);
+        vehicleMapper.parkVehicle(vehicleDto, parkingSlotContext);
+        parkingRepository.save(parking);
         return responseService.createSuccessfulMessageResponse(ResponseMessageCode.SUCCESS_PARK, vehicleDto.getPlateNumber());
 
     }
 
     private void updateExistingParkingSlot(ParkingSlot parkingSlot) {
-        parkingSlotContext.setParkingSlot(parkingSlot);
+        parkingSlotContext.setParkingSlotParking(parkingSlot);
         parkingSlot.setIsAvailable(false);
     }
 
     @Override
-    public SuccessMessageResponse updateToParkingSlot(VehicleDto vehicleDto, Vehicle existingVehicle) {
-        ParkingSlot parkingSlot = availableParkingSlot(vehicleDto).get();
+    public SuccessMessageResponse updateToParkingSlot(VehicleDto vehicleDto, Vehicle existingVehicle,
+                                                      String parkingNumber) {
+        Parking parking = parkingRepository.findByParkingNumber(parkingNumber).get();
+        parkingSlotContext.setParking(parking);
+        ParkingSlot parkingSlot = availableParkingSlot(parking.getParkingSlotList());
+        parkingSlotContext.setParkingSlotParking(parkingSlot);
         updateExistingParkingSlot(parkingSlot);
         updateExistingVehicle(vehicleDto, existingVehicle);
-        parkingSlotRepository.save(parkingSlot);
+        parkingRepository.save(parking);
         return responseService.createSuccessfulMessageResponse(ResponseMessageCode.SUCCESS_PARK, vehicleDto.getPlateNumber());
     }
 
-    @Override
-    public Optional<ParkingSlot> availableParkingSlot(VehicleDto vehicleDto) {
-        return parkingSlotRepository.findAllByIsAvailableAndSize(true, sizeToInteger(vehicleDto.getSize())).map(ParkingSlotUtils::getNearestParkingSlot);
+
+    public ParkingSlot availableParkingSlot(List<ParkingSlot> parkingSlotList) {
+        return ParkingSlotUtils.getNearestParkingSlot(parkingSlotList);
     }
 
     /**
@@ -85,16 +100,20 @@ public class VehicleServiceImpl implements VehicleService {
      * @return Message response sucess
      */
     @Override
-    public SuccessMessageResponse unparkVehicle(VehicleUnparkDto vehicleUnparkDto) {
+    public SuccessMessageResponse unparkVehicle(VehicleUnparkDto vehicleUnparkDto, String parkingNumber) {
+
+        Parking parking = parkingRepository.findByParkingNumber(parkingNumber).get();
+        parkingSlotContext.setParking(parking);
+        ParkingSlot parkingSlot = availableParkingSlot(parking.getParkingSlotList());
+        parkingSlotContext.setParkingSlotParking(parkingSlot);
+        updateExistingParkingSlot(parkingSlot);
         VehicleDto vehicleDto = vehicleMapper.mapToVehicleDto(vehicleUnparkDto);
         Vehicle parkedVehicle = vehicleRepository.findByPlateNumberAndIsPark(vehicleDto.getPlateNumber(), true).
                 orElseThrow(() -> new ParkingException(VEHICLE_NOT_FOUND, vehicleDto.getPlateNumber()));
-
-        ParkingSlot vehicleParkingSlot = parkingSlotRepository.findByVehicle(parkedVehicle).
-                orElseThrow(() -> new ParkingException(VEHICLE_PARKING_LOT_NOT_FOUND, vehicleDto.getPlateNumber()));
-
-        applyFees(vehicleDto, vehicleParkingSlot);
-        updateParkingAndVehicle(vehicleDto, parkedVehicle, vehicleParkingSlot);
+        updateExistingVehicle(vehicleDto, parkedVehicle);
+        applyFees(vehicleDto, parkingSlot);
+        updateParkingAndVehicle(vehicleDto, parkedVehicle, parkingSlot);
+        parkingRepository.save(parking);
         return responseService.createSuccessfulMessageResponse(ResponseMessageCode.SUCCESS_UNPARK, vehicleDto.getFee());
     }
 
@@ -127,7 +146,6 @@ public class VehicleServiceImpl implements VehicleService {
     public void updateParkingAndVehicle(VehicleDto vehicleDto, Vehicle parkedVehicle, ParkingSlot parkingSlot) {
         vehicleMapper.updateVehicle(vehicleDto, parkedVehicle, parkingSlotContext);
         parkingSlot.removeVehicle();
-        parkingSlotRepository.save(parkingSlot);
     }
 
 }
