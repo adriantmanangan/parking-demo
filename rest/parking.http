@@ -1,0 +1,137 @@
+###
+POST {{host}}/api/parkings
+Content-Type: application/json
+
+[
+  {
+    "parkingNumber": "Parking1",
+    "parkingSlotList": [
+      {
+        "distanceFromTheEntrance": 1,
+        "parkingSlotNumber": "ParkingSlot1",
+        "size": "LARGE"
+      },
+      {
+        "distanceFromTheEntrance": 4,
+        "parkingSlotNumber": "ParkingSlot2",
+        "size": "SMALL"
+      },
+      {
+        "distanceFromTheEntrance": 3,
+        "parkingSlotNumber": "ParkingSlot3",
+        "size": "LARGE"
+      }
+    ]
+  },
+  {
+    "parkingNumber": "Parking2",
+    "parkingSlotList": [
+      {
+        "distanceFromTheEntrance": 1,
+        "parkingSlotNumber": "ParkingSlot1",
+        "size": "LARGE"
+      },
+      {
+        "distanceFromTheEntrance": 4,
+        "parkingSlotNumber": "ParkingSlot2",
+        "size": "SMALL"
+      },
+      {
+        "distanceFromTheEntrance": 3,
+        "parkingSlotNumber": "ParkingSlot3",
+        "size": "LARGE"
+      }
+    ]
+  },
+  {
+    "parkingNumber": "Parking3",
+    "parkingSlotList": [
+      {
+        "distanceFromTheEntrance": 1,
+        "parkingSlotNumber": "ParkingSlot1",
+        "size": "LARGE"
+      },
+      {
+        "distanceFromTheEntrance": 4,
+        "parkingSlotNumber": "ParkingSlot2",
+        "size": "SMALL"
+      },
+      {
+        "distanceFromTheEntrance": 3,
+        "parkingSlotNumber": "ParkingSlot3",
+        "size": "LARGE"
+      }
+    ]
+  }
+]
+
+POST {{host}}/api/parkings
+Content-Type: application/json
+
+[
+  {
+    "parkingNumber": "Parking1",
+    "parkingSlotList": [
+      {
+        "distanceFromTheEntrance": 1,
+        "parkingSlotNumber": "ParkingSlot1",
+        "size": "LARGE"
+      },
+      {
+        "distanceFromTheEntrance": 4,
+        "parkingSlotNumber": "ParkingSlot2",
+        "size": "SMALL"
+      },
+      {
+        "distanceFromTheEntrance": 3,
+        "parkingSlotNumber": "ParkingSlot3",
+        "size": "LARGE"
+      }
+    ]
+  },
+  {
+    "parkingNumber": "Parking2",
+    "parkingSlotList": [
+      {
+        "distanceFromTheEntrance": 1,
+        "parkingSlotNumber": "ParkingSlot1",
+        "size": "LARGE"
+      },
+      {
+        "distanceFromTheEntrance": 4,
+        "parkingSlotNumber": "ParkingSlot2",
+        "size": "SMALL"
+      },
+      {
+        "distanceFromTheEntrance": 3,
+        "parkingSlotNumber": "ParkingSlot3",
+        "size": "LARGE"
+      }
+    ]
+  },
+  {
+    "parkingNumber": "Parking3",
+    "parkingSlotList": [
+      {
+        "distanceFromTheEntrance": 1,
+        "parkingSlotNumber": "ParkingSlot1",
+        "size": "LARGE"
+      },
+      {
+        "distanceFromTheEntrance": 4,
+        "parkingSlotNumber": "ParkingSlot2",
+        "size": "SMALL"
+      },
+      {
+        "distanceFromTheEntrance": 3,
+        "parkingSlotNumber": "ParkingSlot3",
+        "size": "LARGE"
+      }
+    ]
+  }
+]
+
+
+###
+GET {{host}}/api/parking/Parking1
+Content-Type: application/json

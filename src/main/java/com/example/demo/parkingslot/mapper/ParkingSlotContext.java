@@ -33,4 +33,9 @@ public class ParkingSlotContext {
         parkingSlot.setVehicle(vehicle);
     }
 
+    public void setParkingAndParkingSlot(Parking parking, ParkingSlot parkingSlot){
+        setParking(parking);
+        setParkingSlotParking(parkingSlot);
+    }
+
 }

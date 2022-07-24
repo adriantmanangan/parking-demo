@@ -1,0 +1,9 @@
+###
+POST {{host}}/api/parkingSlot/Parking1
+Content-Type: application/json
+
+{
+  "distanceFromTheEntrance": 1,
+  "parkingSlotNumber": "ParkingSlot4",
+  "size": "LARGE"
+}

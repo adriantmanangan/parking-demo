@@ -1,0 +1,19 @@
+###
+POST {{host}}/api/vehicle/park/Parking1
+Content-Type: application/json
+
+{
+  "plateNumber" : " QWE-621",
+  "size": "LARGE"
+}
+
+
+###
+POST {{host}}/api/vehicle/unpark/Parking1
+Content-Type: application/json
+
+{
+  "plateNumber" : " QWE-699",
+  "size": "LARGE",
+  "exitTime": "2022-07-24@23:00:00"
+}
