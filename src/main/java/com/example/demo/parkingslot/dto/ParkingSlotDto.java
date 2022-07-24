@@ -1,10 +1,5 @@
 package com.example.demo.parkingslot.dto;
 
-import java.util.Date;
-import javax.validation.Valid;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
-
 import com.example.demo.base.constants.Size;
 import com.example.demo.base.validator.EnumSizeValidation;
 import com.example.demo.parking.dto.ParkingDto;
@@ -14,6 +9,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Data
 @Builder

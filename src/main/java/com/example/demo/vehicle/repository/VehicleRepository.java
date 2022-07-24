@@ -1,9 +1,9 @@
 package com.example.demo.vehicle.repository;
 
-import java.util.Optional;
-
 import com.example.demo.vehicle.model.Vehicle;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
 
 public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
 

@@ -3,7 +3,6 @@ package com.example.demo.parkingslot.mapper;
 import com.example.demo.parking.model.Parking;
 import com.example.demo.parkingslot.model.ParkingSlot;
 import com.example.demo.vehicle.model.Vehicle;
-import org.aspectj.lang.annotation.After;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.BeforeMapping;
 import org.mapstruct.MappingTarget;

@@ -1,28 +1,16 @@
 package com.example.demo.parkingslot.model;
 
-import java.util.Date;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
-import javax.persistence.Version;
-
-import com.example.demo.parking.model.Parking;
 import com.example.demo.base.utils.DateUtils;
+import com.example.demo.parking.model.Parking;
 import com.example.demo.vehicle.model.Vehicle;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @NoArgsConstructor

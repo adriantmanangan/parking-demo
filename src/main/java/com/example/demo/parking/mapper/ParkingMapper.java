@@ -1,7 +1,5 @@
 package com.example.demo.parking.mapper;
 
-import java.util.List;
-
 import com.example.demo.base.converter.SizeEnumConverter;
 import com.example.demo.parking.dto.ParkingDto;
 import com.example.demo.parking.model.Parking;
@@ -10,6 +8,8 @@ import com.example.demo.parkingslot.mapper.ParkingSlotMapper;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
+
+import java.util.List;
 
 @Mapper(
     componentModel = "spring",

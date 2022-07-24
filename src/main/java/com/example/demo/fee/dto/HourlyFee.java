@@ -1,15 +1,15 @@
 package com.example.demo.fee.dto;
 
-import static com.example.demo.base.utils.TimeUtils.isParkingTimeExceeds24Hrs;
-
-import java.math.BigDecimal;
-
 import com.example.demo.fee.Fee;
 import com.example.demo.vehicle.dto.VehicleDto;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
+
+import static com.example.demo.base.utils.TimeUtils.isParkingTimeExceeds24Hrs;
 
 @Getter
 @Setter

@@ -1,6 +1,5 @@
 package com.example.demo.vehicle.service;
 
-import com.example.demo.base.ResponseErrorCode;
 import com.example.demo.base.constants.ResponseMessageCode;
 import com.example.demo.base.constants.SuccessMessageResponse;
 import com.example.demo.base.service.response.ResponseService;
@@ -10,10 +9,8 @@ import com.example.demo.fee.service.FeeService;
 import com.example.demo.parking.exception.ParkingException;
 import com.example.demo.parking.model.Parking;
 import com.example.demo.parking.repository.ParkingRepository;
-import com.example.demo.parkingslot.exception.ParkingSlotException;
 import com.example.demo.parkingslot.mapper.ParkingSlotContext;
 import com.example.demo.parkingslot.model.ParkingSlot;
-import com.example.demo.parkingslot.repository.ParkingSlotRepository;
 import com.example.demo.parkingslot.utils.ParkingSlotUtils;
 import com.example.demo.vehicle.dto.VehicleDto;
 import com.example.demo.vehicle.dto.VehicleUnparkDto;
@@ -29,20 +26,16 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.example.demo.base.ResponseErrorCode.VEHICLE_NOT_FOUND;
-import static com.example.demo.base.ResponseErrorCode.VEHICLE_PARKING_LOT_NOT_FOUND;
-import static com.example.demo.base.converter.SizeEnumConverter.sizeToInteger;
 
 @AllArgsConstructor
 @Component
 public class VehicleServiceImpl implements VehicleService {
 
-    private final ParkingSlotRepository parkingSlotRepository;
     private final VehicleRepository vehicleRepository;
     private final ResponseService responseService;
     private final VehicleMapper vehicleMapper;
     private final ParkingSlotContext parkingSlotContext;
     private final FeeService feeService;
-
     private final ParkingRepository parkingRepository;
 
     @Override

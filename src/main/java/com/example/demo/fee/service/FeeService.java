@@ -1,8 +1,5 @@
 package com.example.demo.fee.service;
 
-import java.math.BigDecimal;
-import java.util.List;
-
 import com.example.demo.base.utils.TimeUtils;
 import com.example.demo.fee.Fee;
 import com.example.demo.fee.Vehicle;
@@ -10,6 +7,9 @@ import com.example.demo.parkingslot.model.ParkingSlot;
 import com.example.demo.vehicle.dto.VehicleDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service

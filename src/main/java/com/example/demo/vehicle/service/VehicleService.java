@@ -1,14 +1,10 @@
 package com.example.demo.vehicle.service;
 
-import java.util.Optional;
-
 import com.example.demo.base.constants.SuccessMessageResponse;
-import com.example.demo.parkingslot.dto.ParkingSlotDto;
 import com.example.demo.parkingslot.model.ParkingSlot;
 import com.example.demo.vehicle.dto.VehicleDto;
 import com.example.demo.vehicle.dto.VehicleUnparkDto;
 import com.example.demo.vehicle.model.Vehicle;
-import org.springframework.http.ResponseEntity;
 
 public interface VehicleService {
 

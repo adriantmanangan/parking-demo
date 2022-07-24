@@ -1,11 +1,11 @@
 package com.example.demo.base.utils;
 
+import com.example.demo.fee.constants.TimeConstants;
+import com.example.demo.vehicle.dto.VehicleDto;
+
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
-
-import com.example.demo.fee.constants.TimeConstants;
-import com.example.demo.vehicle.dto.VehicleDto;
 
 public class TimeUtils {
 

@@ -5,14 +5,7 @@ import com.example.demo.parkingslot.mapper.ParkingSlotContext;
 import com.example.demo.vehicle.dto.VehicleDto;
 import com.example.demo.vehicle.dto.VehicleUnparkDto;
 import com.example.demo.vehicle.model.Vehicle;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Context;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValueCheckStrategy;
-import org.mapstruct.NullValuePropertyMappingStrategy;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 
 @Mapper(
     unmappedTargetPolicy = ReportingPolicy.IGNORE,

@@ -1,7 +1,5 @@
 package com.example.demo.base.service.response;
 
-import java.util.List;
-
 import com.example.demo.base.ApiErrorCode;
 import com.example.demo.base.ErrorResponseItem;
 import com.example.demo.parkingslot.advice.ErrorResponse;
@@ -10,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
+
+import java.util.List;
 
 @Service
 @Slf4j

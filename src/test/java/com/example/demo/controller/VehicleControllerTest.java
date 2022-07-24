@@ -1,8 +1,5 @@
 package com.example.demo.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.example.demo.base.constants.SuccessMessageResponse;
 import com.example.demo.base.service.response.ResponseService;
 import com.example.demo.builder.VehicleTest;
@@ -21,6 +18,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = VehicleController.class)
 public class VehicleControllerTest implements VehicleTest{

@@ -1,14 +1,14 @@
 package com.example.demo.base;
 
-import static com.google.common.base.Strings.nullToEmpty;
-
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+
+import java.io.Serializable;
+
+import static com.google.common.base.Strings.nullToEmpty;
 
 @Data
 @ToString

@@ -1,9 +1,9 @@
 package com.example.demo.parking.service.parking;
 
-import java.util.List;
-
 import com.example.demo.parking.dto.ParkingDto;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 public interface ParkingService {
 

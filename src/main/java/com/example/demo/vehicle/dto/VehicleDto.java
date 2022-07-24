@@ -1,9 +1,5 @@
 package com.example.demo.vehicle.dto;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import javax.validation.constraints.NotBlank;
-
 import com.example.demo.base.constants.Size;
 import com.example.demo.base.utils.DateUtils;
 import com.example.demo.base.validator.EnumSizeValidation;
@@ -13,6 +9,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotBlank;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Data
 @Builder

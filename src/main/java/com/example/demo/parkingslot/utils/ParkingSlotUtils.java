@@ -1,10 +1,10 @@
 package com.example.demo.parkingslot.utils;
 
+import com.example.demo.parkingslot.model.ParkingSlot;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
-
-import com.example.demo.parkingslot.model.ParkingSlot;
 
 public class ParkingSlotUtils {
 

@@ -1,10 +1,9 @@
 package com.example.demo.fee;
 
-import java.math.BigDecimal;
-
-import com.example.demo.parkingslot.dto.ParkingSlotDto;
 import com.example.demo.parkingslot.model.ParkingSlot;
 import com.example.demo.vehicle.dto.VehicleDto;
+
+import java.math.BigDecimal;
 
 public interface Vehicle {
 

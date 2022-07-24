@@ -1,8 +1,8 @@
 package com.example.demo.fee;
 
-import java.math.BigDecimal;
-
 import com.example.demo.vehicle.dto.VehicleDto;
+
+import java.math.BigDecimal;
 
 public interface Fee {
 

@@ -1,12 +1,12 @@
 package com.example.demo.parkingslot.repository;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.example.demo.parking.model.Parking;
 import com.example.demo.parkingslot.model.ParkingSlot;
 import com.example.demo.vehicle.model.Vehicle;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface ParkingSlotRepository extends JpaRepository<ParkingSlot, Long> {
 

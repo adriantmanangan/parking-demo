@@ -1,8 +1,5 @@
 package com.example.demo.parkingslot.advice;
 
-import java.util.List;
-import java.util.Objects;
-
 import com.example.demo.base.ErrorResponseItem;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,6 +7,8 @@ import com.google.common.collect.ImmutableList;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+
+import java.util.List;
 
 @Data
 @ToString

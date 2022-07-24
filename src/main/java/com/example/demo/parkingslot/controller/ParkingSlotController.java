@@ -1,8 +1,5 @@
 package com.example.demo.parkingslot.controller;
 
-import javax.validation.Valid;
-
-import com.example.demo.base.service.response.ResponseService;
 import com.example.demo.parking.dto.ParkingDto;
 import com.example.demo.parkingslot.dto.ParkingSlotDto;
 import com.example.demo.parkingslot.service.ParkingSlotService;
