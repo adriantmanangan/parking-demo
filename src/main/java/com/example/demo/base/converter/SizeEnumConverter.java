@@ -3,6 +3,9 @@ package com.example.demo.base.converter;
 import com.example.demo.base.constants.Size;
 import org.mapstruct.Named;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Named("sizeEnumConverter")
 public class SizeEnumConverter {
 
@@ -34,5 +37,20 @@ public class SizeEnumConverter {
                 return Size.SMALL;
         }
         return null;
+    }
+
+    public static List<Integer> getPossibleSize(Integer size) {
+        List<Integer> sizes = new ArrayList<>();
+        switch (size) {
+            case 3:
+                sizes = List.of(3);
+                break;
+            case 2:
+                sizes = List.of(3, 2);
+                break;
+            case 1:
+                sizes = List.of(3, 2, 1);
+        }
+        return sizes;
     }
 }

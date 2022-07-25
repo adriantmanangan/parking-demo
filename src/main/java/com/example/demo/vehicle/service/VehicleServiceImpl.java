@@ -1,6 +1,7 @@
 package com.example.demo.vehicle.service;
 
 import com.example.demo.base.constants.ResponseMessageCode;
+import com.example.demo.base.constants.Size;
 import com.example.demo.base.constants.SuccessMessageResponse;
 import com.example.demo.base.service.response.ResponseService;
 import com.example.demo.base.utils.TimeUtils;
@@ -53,7 +54,7 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public SuccessMessageResponse addToParkingSlot(VehicleDto vehicleDto, String reference) {
         Parking parking = parkingRepository.findByParkingNumber(reference).get();
-        ParkingSlot parkingSlot = availableParkingSlot(parking.getParkingSlotList());
+        ParkingSlot parkingSlot = availableParkingSlot(parking.getParkingSlotList(), vehicleDto.getSize());
         parkingSlotContext.setParkingAndParkingSlot(parking,parkingSlot);
         parkingSlot.setIsAvailable(false);
         vehicleMapper.parkVehicle(vehicleDto, parkingSlotContext);
@@ -66,7 +67,7 @@ public class VehicleServiceImpl implements VehicleService {
     public SuccessMessageResponse updateToParkingSlot(VehicleDto vehicleDto, Vehicle existingVehicle,
                                                       String parkingNumber) {
         Parking parking = parkingRepository.findByParkingNumber(parkingNumber).get();
-        ParkingSlot parkingSlot = availableParkingSlot(parking.getParkingSlotList());
+        ParkingSlot parkingSlot = availableParkingSlot(parking.getParkingSlotList(), vehicleDto.getSize());
         parkingSlotContext.setParkingAndParkingSlot(parking,parkingSlot);
         parkingSlot.setIsAvailable(false);
         updateExistingVehicle(vehicleDto, existingVehicle);
@@ -75,8 +76,8 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
 
-    public ParkingSlot availableParkingSlot(List<ParkingSlot> parkingSlotList) {
-        return ParkingSlotUtils.getNearestParkingSlot(parkingSlotList);
+    public ParkingSlot availableParkingSlot(List<ParkingSlot> parkingSlotList, Size size) {
+        return ParkingSlotUtils.getNearestParkingSlot(parkingSlotList,size);
     }
 
     /**
@@ -88,7 +89,7 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public SuccessMessageResponse unparkVehicle(VehicleUnparkDto vehicleUnparkDto, String parkingNumber) {
         Parking parking = parkingRepository.findByParkingNumber(parkingNumber).get();
-        ParkingSlot parkingSlot = availableParkingSlot(parking.getParkingSlotList());
+        ParkingSlot parkingSlot = availableParkingSlot(parking.getParkingSlotList(), vehicleUnparkDto.getSize());
         parkingSlotContext.setParkingAndParkingSlot(parking,parkingSlot);
         parkingSlot.setIsAvailable(true);
         VehicleDto vehicleDto = vehicleMapper.mapToVehicleDto(vehicleUnparkDto);
